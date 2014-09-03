@@ -1,0 +1,89 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+Element to zip together an array of time series.
+
+##### Example
+
+    <time-series-zip input="[]" sink="{{zipped}}"></time-series-zip>
+
+@element time-series-zip
+@blurb Element to zip together an array of time series
+@status alpha
+-->
+<polymer-element name="time-series-zip" attributes="input sink">
+  <script>
+    function zipTimeSeries(series) {
+      return series.reduce(function(in1, in2) {
+        // Zip each input with the previous ones, padding with zeroes
+        // when Date entries are only present in one of the series
+        var arr = [];
+        // TODO: cleanup logic
+        var i1 = 0, i2 = 0, len1 = in1.length, len2 = in2.length;
+        while(i1 < len1 || i2 < len2) {
+          if (! in2[i2] || in1[i1][0] < in2[i2][0]) {
+            arr.push(in1[i1].concat(0));
+            i1++;
+          } else if (! in1[i1] || in1[i1][0] > in2[i2][0]) {
+            var fill = [in2[i2][0]];
+            var values1 = in1[0] ? in1[0].length - 1 : 0;
+            for (var k = 0, l = values1; k < l; k++) {
+              fill.push(0);
+            }
+            fill.push(in2[i2][1]);
+            i2++;
+          } else {
+            arr.push(in1[i1].concat(in2[i2][1]));
+            i1++;
+            i2++;
+          }
+        }
+        return arr;
+      });
+    }
+
+    function allTruthy(array) {
+      return array.every(function(x) { return !! x; });
+    }
+
+    Polymer('time-series-zip', {
+      observe: {
+        input: 'update'
+      },
+
+      /**
+       * The array of time series to zip together.
+       * Each time serie should be an array of pairs of [Date, Number].
+       *
+       * @attribute input
+       * @type Array
+       */
+      input: [],
+
+      /**
+       * The read-only `sink` attribute exports the zipped time series.
+       *
+       * @attribute sink
+       * @type Array
+       */
+      sink: undefined,
+
+
+      /* == Lifecycle == */
+
+      ready: function() {
+        this.update();
+      },
+
+
+      /* == Internal methods == */
+
+      update: function() {
+        // Wait until all inputs are resolved
+        if (allTruthy(this.input)) {
+          this.sink = zipTimeSeries(this.input);
+        }
+      }
+    });
+  </script>
+</polymer-element>

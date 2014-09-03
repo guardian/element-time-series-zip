@@ -1,0 +1,7 @@
+{
+  "name": "element-time-series-zip#gh-pages",
+  "private": true,
+  "dependencies": {
+    "time-series-zip": "guardian/element-time-series-zip#master"
+  }
+}

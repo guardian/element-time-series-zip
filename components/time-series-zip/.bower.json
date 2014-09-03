@@ -1,0 +1,28 @@
+{
+  "name": "time-series-zip",
+  "authors": [
+    "Sébastien Cevey <seb.cevey@theguardian.com>"
+  ],
+  "description": "Element to zip together an array of time series",
+  "keywords": "time, time-series, date, polymer, web-components",
+  "main": "time-series-zip.html",
+  "license": "Apache-2",
+  "homepage": "https://github.com/guardian/element-time-series-zip/",
+  "ignore": [
+    "**/.*"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.3.4",
+    "polymer-test-tools": "Polymer/polymer-test-tools#~0.3.3"
+  },
+  "_release": "d76b695ef1",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "d76b695ef1d059d110093cec8d7827866d4bc6f8"
+  },
+  "_source": "git://github.com/guardian/element-time-series-zip.git",
+  "_target": "master",
+  "_originalSource": "guardian/element-time-series-zip",
+  "_direct": true
+}
