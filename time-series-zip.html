@@ -21,10 +21,10 @@ Element to zip together an array of time series.
         // TODO: cleanup logic
         var i1 = 0, i2 = 0, len1 = in1.length, len2 = in2.length;
         while(i1 < len1 || i2 < len2) {
-          if (! in2[i2] || in1[i1][0] < in2[i2][0]) {
+          if (i2 >= len2 || (i1 < len1 && in1[i1][0] < in2[i2][0])) {
             arr.push(in1[i1].concat(0));
             i1++;
-          } else if (! in1[i1] || in1[i1][0] > in2[i2][0]) {
+          } else if (i1 >= len1 || (i2 < len2 && in1[i1][0] > in2[i2][0])) {
             var fill = [in2[i2][0]];
             var values1 = in1[0] ? in1[0].length - 1 : 0;
             for (var k = 0, l = values1; k < l; k++) {
